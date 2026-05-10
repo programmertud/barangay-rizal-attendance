@@ -31,6 +31,7 @@
 }
 
 .ui-select {
+  width: 100%;
   border-radius: 0.75rem;
   border: 1px solid var(--border);
   background: color-mix(in srgb, var(--surface-2) 70%, transparent);
@@ -121,17 +122,17 @@
 }
 
 :root {
-  --bg: radial-gradient(1000px 600px at 18% 8%, rgba(124, 58, 237, 0.22), transparent 55%),
-    radial-gradient(900px 600px at 85% 22%, rgba(56, 189, 248, 0.16), transparent 52%),
+  --bg: radial-gradient(1000px 600px at 18% 8%, rgba(16, 185, 129, 0.15), transparent 55%),
+    radial-gradient(900px 600px at 85% 22%, rgba(52, 211, 153, 0.1), transparent 52%),
     linear-gradient(180deg, #040712 0%, #02040b 55%, #010208 100%);
-  --surface: rgba(15, 23, 42, 0.76);
-  --surface-2: rgba(17, 24, 39, 0.88);
+  --surface: rgba(15, 23, 42, 0.65);
+  --surface-2: rgba(17, 24, 39, 0.75);
   --text: rgba(226, 232, 240, 0.98);
   --muted: rgba(148, 163, 184, 0.88);
-  --border: rgba(148, 163, 184, 0.16);
-  --accent: #8b5cf6;
-  --accent-2: #38bdf8;
-  --ring: rgba(139, 92, 246, 0.45);
+  --border: rgba(148, 163, 184, 0.12);
+  --accent: #10b981;
+  --accent-2: #059669;
+  --ring: rgba(16, 185, 129, 0.45);
   --shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
   --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.35);
   --radius: 18px;

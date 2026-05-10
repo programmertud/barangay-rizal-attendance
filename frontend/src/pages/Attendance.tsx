@@ -242,54 +242,98 @@ const Attendance: React.FC = () => {
             </div>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-[var(--border)]">
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[var(--muted)]">Name</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[var(--muted)]">Position</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[var(--muted)]">Time In</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[var(--muted)]">Time Out</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[var(--muted)]">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tableRows.length === 0 ? (
-                  <tr>
-                    <td colSpan={5} className="py-10 px-4 text-center text-sm text-[var(--muted)]">
-                      No results.
-                    </td>
+          <div className="w-full mt-4">
+            {/* Mobile View (Cards) */}
+            <div className="md:hidden space-y-4">
+              {tableRows.length === 0 ? (
+                <div className="p-8 text-center text-sm text-[var(--muted)]">No results.</div>
+              ) : (
+                tableRows.map((row) => (
+                  <div key={row.official.id} className="bg-[rgba(255,255,255,0.03)] border border-[var(--border)] rounded-2xl p-4 flex flex-col gap-3 shadow-sm">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="font-semibold text-[var(--text)] text-lg">{row.official.name}</p>
+                        <p className="text-xs text-[var(--muted)]">{row.official.position}</p>
+                      </div>
+                      <span
+                        className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${
+                          row.status === 'pending'
+                            ? 'bg-[var(--surface-2)] text-[var(--muted)]'
+                            : row.status === 'present'
+                            ? 'bg-[var(--chip-success-bg)] text-[var(--chip-success-text)]'
+                            : row.status === 'late'
+                            ? 'bg-[var(--chip-warn-bg)] text-[var(--chip-warn-text)]'
+                            : 'bg-[var(--chip-danger-bg)] text-[var(--chip-danger-text)]'
+                        }`}
+                      >
+                        {row.status}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 bg-[var(--surface-2)] rounded-xl p-3">
+                      <div>
+                        <p className="text-[10px] uppercase tracking-wider text-[var(--muted)] font-bold mb-1">Time In</p>
+                        <p className="text-sm text-[var(--text)]">{formatTime(row.timeIn)}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] uppercase tracking-wider text-[var(--muted)] font-bold mb-1">Time Out</p>
+                        <p className="text-sm text-[var(--text)]">{formatTime(row.timeOut)}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Desktop View (Table) */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-[var(--border)]">
+                    <th className="py-4 px-4 text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">Name</th>
+                    <th className="py-4 px-4 text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">Position</th>
+                    <th className="py-4 px-4 text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">Time In</th>
+                    <th className="py-4 px-4 text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">Time Out</th>
+                    <th className="py-4 px-4 text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">Status</th>
                   </tr>
-                ) : (
-                  tableRows.map((row) => (
-                    <tr
-                      key={row.official.id}
-                      className="border-b border-[var(--border)] hover:bg-[var(--accent)]/5"
-                    >
-                      <td className="py-3 px-4 text-[var(--text)] font-medium">{row.official.name}</td>
-                      <td className="py-3 px-4 text-[var(--muted)]">{row.official.position}</td>
-                      <td className="py-3 px-4 text-[var(--muted)]">{formatTime(row.timeIn)}</td>
-                      <td className="py-3 px-4 text-[var(--muted)]">{formatTime(row.timeOut)}</td>
-                      <td className="py-3 px-4">
-                        <span
-                          className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${
-                            row.status === 'pending'
-                              ? 'bg-[var(--surface-2)] text-[var(--muted)]'
-                              : row.status === 'present'
-                              ? 'bg-[var(--chip-success-bg)] text-[var(--chip-success-text)]'
-                              : row.status === 'late'
-                              ? 'bg-[var(--chip-warn-bg)] text-[var(--chip-warn-text)]'
-                              : 'bg-[var(--chip-danger-bg)] text-[var(--chip-danger-text)]'
-                          }`}
-                        >
-                          {row.status}
-                        </span>
+                </thead>
+                <tbody>
+                  {tableRows.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="py-10 px-4 text-center text-sm text-[var(--muted)]">
+                        No results.
                       </td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  ) : (
+                    tableRows.map((row) => (
+                      <tr
+                        key={row.official.id}
+                        className="border-b border-[var(--border)] hover:bg-[rgba(255,255,255,0.02)] transition-colors"
+                      >
+                        <td className="py-4 px-4 text-[var(--text)] font-medium">{row.official.name}</td>
+                        <td className="py-4 px-4 text-[var(--muted)] text-sm">{row.official.position}</td>
+                        <td className="py-4 px-4 text-[var(--muted)] text-sm font-mono">{formatTime(row.timeIn)}</td>
+                        <td className="py-4 px-4 text-[var(--muted)] text-sm font-mono">{formatTime(row.timeOut)}</td>
+                        <td className="py-4 px-4">
+                          <span
+                            className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${
+                              row.status === 'pending'
+                                ? 'bg-[var(--surface-2)] text-[var(--muted)]'
+                                : row.status === 'present'
+                                ? 'bg-[var(--chip-success-bg)] text-[var(--chip-success-text)]'
+                                : row.status === 'late'
+                                ? 'bg-[var(--chip-warn-bg)] text-[var(--chip-warn-text)]'
+                                : 'bg-[var(--chip-danger-bg)] text-[var(--chip-danger-text)]'
+                            }`}
+                          >
+                            {row.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </Card>

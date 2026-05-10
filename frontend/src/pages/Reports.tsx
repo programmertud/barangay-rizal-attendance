@@ -197,37 +197,99 @@ const Reports: React.FC = () => {
 
       {reportData.length > 0 && (
         <Card title="Attendance Summary">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-[var(--border)]">
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[var(--muted)]">Official</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[var(--muted)]">Present</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[var(--muted)]">Absent</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[var(--muted)]">Late</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[var(--muted)]">AM In</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[var(--muted)]">AM Out</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[var(--muted)]">PM In</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[var(--muted)]">PM Out</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[var(--muted)]">Attendance Rate (%)</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reportData.map((row, index) => (
-                  <tr key={index} className="border-b border-[var(--border)] hover:bg-[var(--accent)]/5">
-                    <td className="py-3 px-4 text-[var(--text)] font-medium">{row.official}</td>
-                    <td className="py-3 px-4 text-[var(--muted)]">{row.present}</td>
-                    <td className="py-3 px-4 text-[var(--muted)]">{row.absent}</td>
-                    <td className="py-3 px-4 text-[var(--muted)]">{row.late}</td>
-                    <td className="py-3 px-4 text-[var(--muted)]">{row.amIn}</td>
-                    <td className="py-3 px-4 text-[var(--muted)]">{row.amOut}</td>
-                    <td className="py-3 px-4 text-[var(--muted)]">{row.pmIn}</td>
-                    <td className="py-3 px-4 text-[var(--muted)]">{row.pmOut}</td>
-                    <td className="py-3 px-4 text-[var(--muted)]">{row.attendanceRate}%</td>
+          <div className="w-full">
+            {/* Mobile View (Cards) */}
+            <div className="md:hidden space-y-4">
+              {reportData.map((row, index) => (
+                <div key={index} className="bg-[rgba(255,255,255,0.03)] border border-[var(--border)] rounded-2xl p-4 flex flex-col gap-4 shadow-sm">
+                  <div className="flex justify-between items-center border-b border-[var(--border)] pb-3">
+                    <p className="font-semibold text-[var(--text)] text-lg">{row.official}</p>
+                    <div className="text-right">
+                      <p className="text-[10px] uppercase text-[var(--muted)] font-bold">Rate</p>
+                      <p className="font-bold text-[var(--accent)] text-lg">{row.attendanceRate}%</p>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-3 gap-2 text-center">
+                    <div className="bg-[var(--chip-success-bg)] text-[var(--chip-success-text)] rounded-lg p-2">
+                      <p className="text-[10px] uppercase font-bold mb-1 opacity-80">Present</p>
+                      <p className="font-bold text-lg leading-none">{row.present}</p>
+                    </div>
+                    <div className="bg-[var(--chip-warn-bg)] text-[var(--chip-warn-text)] rounded-lg p-2">
+                      <p className="text-[10px] uppercase font-bold mb-1 opacity-80">Late</p>
+                      <p className="font-bold text-lg leading-none">{row.late}</p>
+                    </div>
+                    <div className="bg-[var(--chip-danger-bg)] text-[var(--chip-danger-text)] rounded-lg p-2">
+                      <p className="text-[10px] uppercase font-bold mb-1 opacity-80">Absent</p>
+                      <p className="font-bold text-lg leading-none">{row.absent}</p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3 mt-1">
+                    <div className="bg-[var(--surface-2)] rounded-xl p-3">
+                      <p className="text-[10px] uppercase text-[var(--muted)] font-bold mb-2 text-center border-b border-[var(--border)] pb-1">Morning (AM)</p>
+                      <div className="flex justify-between px-2">
+                        <div className="text-center">
+                          <p className="text-[10px] text-[var(--muted)]">In</p>
+                          <p className="font-semibold text-[var(--text)]">{row.amIn}</p>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-[10px] text-[var(--muted)]">Out</p>
+                          <p className="font-semibold text-[var(--text)]">{row.amOut}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-[var(--surface-2)] rounded-xl p-3">
+                      <p className="text-[10px] uppercase text-[var(--muted)] font-bold mb-2 text-center border-b border-[var(--border)] pb-1">Afternoon (PM)</p>
+                      <div className="flex justify-between px-2">
+                        <div className="text-center">
+                          <p className="text-[10px] text-[var(--muted)]">In</p>
+                          <p className="font-semibold text-[var(--text)]">{row.pmIn}</p>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-[10px] text-[var(--muted)]">Out</p>
+                          <p className="font-semibold text-[var(--text)]">{row.pmOut}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop View (Table) */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-[var(--border)]">
+                    <th className="py-4 px-4 text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">Official</th>
+                    <th className="py-4 px-4 text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">Present</th>
+                    <th className="py-4 px-4 text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">Absent</th>
+                    <th className="py-4 px-4 text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">Late</th>
+                    <th className="py-4 px-4 text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">AM In</th>
+                    <th className="py-4 px-4 text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">AM Out</th>
+                    <th className="py-4 px-4 text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">PM In</th>
+                    <th className="py-4 px-4 text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">PM Out</th>
+                    <th className="py-4 px-4 text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">Rate</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {reportData.map((row, index) => (
+                    <tr key={index} className="border-b border-[var(--border)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                      <td className="py-4 px-4 text-[var(--text)] font-medium">{row.official}</td>
+                      <td className="py-4 px-4 text-[var(--muted)]">{row.present}</td>
+                      <td className="py-4 px-4 text-[var(--muted)]">{row.absent}</td>
+                      <td className="py-4 px-4 text-[var(--muted)]">{row.late}</td>
+                      <td className="py-4 px-4 text-[var(--muted)]">{row.amIn}</td>
+                      <td className="py-4 px-4 text-[var(--muted)]">{row.amOut}</td>
+                      <td className="py-4 px-4 text-[var(--muted)]">{row.pmIn}</td>
+                      <td className="py-4 px-4 text-[var(--muted)]">{row.pmOut}</td>
+                      <td className="py-4 px-4 text-[var(--text)] font-semibold">{row.attendanceRate}%</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </Card>
       )}
