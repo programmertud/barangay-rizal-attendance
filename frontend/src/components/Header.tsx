@@ -16,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   };
 
   return (
-    <header className="sticky top-0 z-20 bg-[rgba(15,23,42,0.85)] backdrop-blur-md border-b border-[var(--border)] shadow-[var(--shadow-soft)]">
+    <header className="sticky top-0 z-20 bg-[var(--surface)] backdrop-blur-md border-b border-[var(--border)] shadow-[var(--shadow-soft)]">
       <div className="flex items-center justify-between px-4 py-3 md:px-6 md:py-4">
         <div className="flex items-center gap-3">
           <button 
