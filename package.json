@@ -1,0 +1,10 @@
+{
+  "name": "barangay-attendance-root",
+  "private": true,
+  "scripts": {
+    "frontend:dev": "npm --prefix frontend run dev",
+    "frontend:build": "npm --prefix frontend run build",
+    "frontend:install": "npm --prefix frontend install",
+    "functions:deploy": "firebase deploy --only functions"
+  }
+}
